@@ -26,5 +26,14 @@ copy_arrays = [copy.deepcopy(array) for array in arrays]
 for sort_func in sorting_functions:
     print(f"Sorting with {sort_func.__name__}")
     for array, array_size in zip(copy_arrays, ARRAY_SIZES):
-        time_taken = timeit.timeit(lambda: sort_func(array), number=5)
-        print(f"Array size {array_size}: {time_taken:.6f} seconds")
+        # Record the times here, for debugging uncomment the code block below
+
+        # time_taken = timeit.timeit(lambda: sort_func(array), number=5)
+        # print(f"Array size {array_size}: {time_taken:.6f} seconds")
+
+        
+        run_times = []
+        for _ in range(5):  # Run each function 5 times
+            run_time = timeit.timeit(lambda: sort_func(array), number=1)
+            run_times.append(run_time)
+            print(f"Array size {array_size}, Run {len(run_times)}: {run_time:.6f} seconds")
