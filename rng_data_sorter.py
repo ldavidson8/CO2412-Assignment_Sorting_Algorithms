@@ -1,6 +1,8 @@
 import random
 import timeit
 import copy
+import matplotlib.pyplot as plt
+import numpy as np
 from merge_sort import merge_sort as msort
 from selection_sort import selection_sort as ssort
 from quick_sort import quick_sort as qsort
@@ -22,6 +24,9 @@ for size in ARRAY_SIZES:
 # Create copies of the arrays for sorting
 copy_arrays = [copy.deepcopy(array) for array in arrays]
 
+# Dictionary to store run times for each algorithm
+run_times_dict = {sort_func.__name__: [] for sort_func in sorting_functions}
+
 # Run each sorting algorithm five times and record execution time
 for sort_func in sorting_functions:
     print(f"Sorting with {sort_func.__name__}")
@@ -37,3 +42,13 @@ for sort_func in sorting_functions:
             run_time = timeit.timeit(lambda: sort_func(array), number=1)
             run_times.append(run_time)
             print(f"Array size {array_size}, Run {len(run_times)}: {run_time:.6f} seconds")
+        run_times_dict[sort_func.__name__].append(run_times)
+
+for sort_func in sorting_functions:
+    plt.plot(ARRAY_SIZES, [np.mean(times) for times in run_times_dict[sort_func.__name__]], label=sort_func.__name__)
+
+plt.xlabel('Data Size')
+plt.ylabel('Execution Time (seconds)')
+plt.title('Algorithm Performance Comparison')
+plt.legend()
+plt.show()
