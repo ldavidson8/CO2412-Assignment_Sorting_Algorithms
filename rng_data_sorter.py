@@ -1,8 +1,10 @@
+import os
 import random
 import timeit
 import copy
 import matplotlib.pyplot as plt
 import numpy as np
+from check_unique_elements import check_unique_elements
 from merge_sort import merge_sort as msort
 from selection_sort import selection_sort as ssort
 from quick_sort import quick_sort as qsort
@@ -10,15 +12,7 @@ from quick_sort import quick_sort as qsort
 NUMBER_MIN = 100000
 NUMBER_MAX = 999999
 SORTING_ITERATIONS = 5
-
-def check_unique_elements(array):
-    unique_set = set()
-
-    for num in array:
-        if num in unique_set:
-            return False  # Found a duplicate
-        unique_set.add(num)
-    return True
+SORTED_ARRAYS_DIR = 'sorted_arrays'
 
 
 # If you wish to create another array, add another whole number inside this array
@@ -62,6 +56,14 @@ for sort_func in sorting_functions:
             print(f"Array size {array_size}, Run {len(run_times)}: {run_time:.6f} seconds")
 
         run_times_dict[sort_func.__name__].append(run_times)
+
+        algorithm_dir = os.path.join(SORTED_ARRAYS_DIR, sort_func.__name__)
+        if not os.path.exists(algorithm_dir):
+            os.makedirs(algorithm_dir)
+        filename = f'sorted_array_size_{array_size}.txt'
+        filepath = os.path.join(algorithm_dir, filename)
+        with open(filepath, 'w') as file:
+            file.write('\n'.join(map(str, array)))
 
 for sort_func in sorting_functions:
     label_name = sort_func.__name__
