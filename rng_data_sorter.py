@@ -68,6 +68,7 @@ def plot_times(run_times_dict, array_sizes, line_styles):
         )
     plt.xlabel("Data Size")
     plt.ylabel("Execution Time (seconds)")
+    plt.xscale("log")
     plt.title("Algorithm Performance Comparison")
     plt.legend()
     plt.show()
