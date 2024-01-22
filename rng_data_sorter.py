@@ -19,6 +19,7 @@ NUMBER_MAX = 999_999
 SORTING_ITERATIONS = 5
 SORTED_ARRAYS_DIR = "sorted_arrays"
 ARRAY_SIZES = [100, 1_000, 10_000]
+MILLISECONDS_IN_SECOND = 1000
 
 
 # Creating the arrays of a random integer between 100,000 and 999,999
@@ -68,13 +69,16 @@ def plot_times(run_times_dict, array_sizes, line_styles):
         label_name = sort_func
         plt.plot(
             array_sizes,
-            [np.mean(times) for times in run_times_dict[sort_func]],
+            [
+                np.mean(times) * MILLISECONDS_IN_SECOND
+                for times in run_times_dict[sort_func]
+            ],
             label=label_name,
             linestyle=line_styles.get(label_name, "-"),
             marker="o",
         )
     plt.xlabel("Data Size")
-    plt.ylabel("Execution Time (seconds)")
+    plt.ylabel("Execution Time (milliseconds)")
     plt.xscale("log")
     plt.title("Algorithm Performance Comparison")
     plt.legend()
@@ -108,7 +112,7 @@ for sort_func in sorting_functions:
 
         for i, (run_time, comparisons) in enumerate(zip(run_times, comparisons_list)):
             print(
-                f"Array size {array_size}, Run {i+1}: Time = {run_time:.6f} seconds, Comparisons = {comparisons}"
+                f"Array size {array_size}, Run {i+1}: Time = {run_time * MILLISECONDS_IN_SECOND:.6f} milliseconds, Comparisons = {comparisons}"
             )
 
 # Plot the execution times of different algorithms
