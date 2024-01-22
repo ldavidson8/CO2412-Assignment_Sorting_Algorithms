@@ -34,4 +34,4 @@ Measure and analyse the following performance metrics for each sorting algorithm
 Generate and create graphs (e.g. line charts, bar charts, scatter graph) to visually compare the performance of the three sorting algorithms across various dataset sizes.
 Present the execution time versus the array sizes in a clear and concise manner to facilitate easy comparison.
 
-![Graph comparing Selection, Merge and Quick sorting algorithms](./images/Graph_Comparison.png 'Sorting Algorithm Graph Example')
+![Graph comparing Selection, Merge and Quick sorting algorithms](<./images/Graph_Comparison(Log).png> 'Sorting Algorithm Graph Example')
