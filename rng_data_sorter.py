@@ -43,10 +43,14 @@ def check_arrays(arrays, array_sizes):
 
 def sort_array(array, sort_func):
     run_times = []
+    comparisons_list = []
     for _ in range(SORTING_ITERATIONS):
+        sorted_array, comparisons = sort_func(array)
         run_time = timeit.timeit(lambda: sort_func(array), number=1)
+
         run_times.append(run_time)
-    return run_times
+        comparisons_list.append(comparisons)
+    return run_times, comparisons_list
 
 
 def save_array(array, array_size, sort_func):
@@ -96,14 +100,16 @@ line_styles = {"quick_sort": "-", "merge_sort": ":", "selection_sort": "--"}
 for sort_func in sorting_functions:
     cprint(f"Sorting with {sort_func.__name__}", attrs=["bold", "underline"])
     for array, array_size in zip(copy_arrays, ARRAY_SIZES):
-        run_times = sort_array(array, sort_func)
+        run_times, comparisons_list = sort_array(array, sort_func)
 
         run_times_dict[sort_func.__name__].append(run_times)
 
         save_array(array, array_size, sort_func)
 
-        for i, run_time in enumerate(run_times):
-            print(f"Array size {array_size}, Run {i+1}: {run_time:.6f} seconds")
+        for i, (run_time, comparisons) in enumerate(zip(run_times, comparisons_list)):
+            print(
+                f"Array size {array_size}, Run {i+1}: Time = {run_time:.6f} seconds, Comparisons = {comparisons}"
+            )
 
 # Plot the execution times of different algorithms
 plot_times(run_times_dict, ARRAY_SIZES, line_styles)
