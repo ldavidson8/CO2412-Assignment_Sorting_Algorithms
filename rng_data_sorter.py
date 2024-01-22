@@ -5,6 +5,7 @@ import timeit
 import copy
 import matplotlib.pyplot as plt
 import numpy as np
+from termcolor import cprint
 
 # Import sorting algorithms
 from check_unique_elements import check_unique_elements
@@ -33,9 +34,11 @@ def check_arrays(arrays, array_sizes):
     for array_size, array in zip(array_sizes, arrays):
         result = check_unique_elements(array)
         if result:
-            print(f"All numbers in array of size {array_size} are unique")
+            cprint(
+                f"All numbers in array of size {array_size} are unique", "light_green"
+            )
         else:
-            print(f"Not all numbers in array of size {array_size} are unique")
+            cprint(f"All numbers in array of size {array_size} are not unique", "red")
 
 
 def sort_array(array, sort_func):
@@ -91,7 +94,7 @@ line_styles = {"quick_sort": "-", "merge_sort": ":", "selection_sort": "--"}
 
 # Sort each array using each algorithm and record the execution time
 for sort_func in sorting_functions:
-    print(f"Sorting with {sort_func.__name__}")
+    cprint(f"Sorting with {sort_func.__name__}", attrs=["bold", "underline"])
     for array, array_size in zip(copy_arrays, ARRAY_SIZES):
         run_times = sort_array(array, sort_func)
 
